@@ -1,0 +1,27 @@
+import { useEffect, useReducer } from 'react'
+import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
+
+import { Canvas } from '../'
+
+import { Model } from '.'
+import model from './model.glb'
+
+<Meta title="Model" component={Model}/>
+
+# Model
+
+The root of all models
+
+## Basic
+
+<Preview>
+  <Story name="Basic">
+    <Canvas>
+      <Model src={model} fallback={'loading...'} />
+    </Canvas>
+  </Story>
+</Preview>
+
+## API
+
+<Props of={Model}/>
