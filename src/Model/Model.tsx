@@ -10,7 +10,7 @@ type Props={
 export const Model: FC<Props> = ({ src, ...other }: Props) => {
   const gltf = useLoader(GLTFLoader, src)
   return (
-    <Suspense {...other}>
+    <Suspense fallback={'loading'} {...other}>
       <primitive object={gltf.scene} dispose={null}/>
     </Suspense>
   )
