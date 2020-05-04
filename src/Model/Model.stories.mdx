@@ -1,4 +1,4 @@
-import { useEffect, useReducer } from 'react'
+import { Suspense, useEffect, useReducer } from 'react'
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 
 import { Canvas } from '../'
@@ -17,7 +17,9 @@ The root of all models
 <Preview>
   <Story name="Basic">
     <Canvas>
-      <Model src={model} fallback={'loading...'} />
+      <Suspense fallback={'loading'}>
+        <Model src={model} fallback={'loading...'} />
+      </Suspense>
     </Canvas>
   </Story>
 </Preview>

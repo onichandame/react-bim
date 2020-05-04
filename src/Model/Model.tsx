@@ -1,17 +1,15 @@
 import 'three'
-import React, { Suspense, FC, ComponentProps } from 'react'
+import React, { FC, ComponentProps } from 'react'
 import { useLoader } from 'react-three-fiber'
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader'
 
 type Props={
   src: string;
-} & ComponentProps<typeof Suspense>
+} & ComponentProps<'primitive'>
 
 export const Model: FC<Props> = ({ src, ...other }: Props) => {
   const gltf = useLoader(GLTFLoader, src)
   return (
-    <Suspense fallback={'loading'} {...other}>
-      <primitive object={gltf.scene} dispose={null}/>
-    </Suspense>
+    <primitive object={gltf.scene} dispose={null} {...other}/>
   )
 }
