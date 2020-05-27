@@ -1,13 +1,13 @@
-import React, { FC, ComponentProps } from 'react';
-import { a } from '@react-spring/three';
-import { Canvas as R3FC } from 'react-three-fiber';
+import React, { FC, ComponentProps } from 'react'
+import { a } from '@react-spring/three'
+import { Canvas as R3FC } from 'react-three-fiber'
 
-import { Scene } from './Scene';
-import { useControl } from './useControl';
+import { Scene } from './Scene'
+import { useControl } from './useControl'
 
 export const Canvas: FC = ({ children, ...other }: ComponentProps<FC>) => {
-  const bound: [number, number] = [-100, 100];
-  const [{ x, y, z }] = useControl(bound, bound, bound, { domTarget: window });
+  const bound: [number, number] = [-100, 100]
+  const [{ x, y, z }] = useControl(bound, bound, bound, { domTarget: window })
   return (
     <R3FC
       invalidateFrameloop
@@ -30,5 +30,5 @@ export const Canvas: FC = ({ children, ...other }: ComponentProps<FC>) => {
         </a.group>
       </Scene>
     </R3FC>
-  );
-};
+  )
+}

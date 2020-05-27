@@ -1,8 +1,8 @@
-import React, { FC, Suspense, ComponentProps } from 'react';
+import React, { FC, Suspense, ComponentProps } from 'react'
 
 type Props = {
-  fallback?: ComponentProps<typeof Suspense>['fallback'];
-};
+  fallback?: ComponentProps<typeof Suspense>['fallback']
+}
 
 export const Scene: FC<Props> = ({ children, fallback = null }) => {
   return (
@@ -49,5 +49,5 @@ export const Scene: FC<Props> = ({ children, fallback = null }) => {
         />
       </mesh>
     </>
-  );
-};
+  )
+}
