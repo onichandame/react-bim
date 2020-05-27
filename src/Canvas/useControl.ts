@@ -51,15 +51,17 @@ export const useControl = (
   )
   const drag = useCallback(
     ({
-      xy: [newX, newY],
-      previous: [oldX, oldY],
+      buttons,
+      dragging,
+      offset: [newX, newY],
       memo = [x.get(), y.get()],
     }) => {
-      newX = clamp(memo[0] + newX - oldX, ...xBounds)
-      setX({ x: newX })
-      newY = clamp(memo[1] - (newY - oldY), ...yBounds)
-      setY({ y: newY })
-      return [newX, newY]
+      if (dragging && buttons == 2) {
+        setX({ x: newX })
+        setY({ y: -newY })
+        return [newX, newY]
+      }
+      return memo
     },
     [xBounds, yBounds, x, y, setX, setY]
   )

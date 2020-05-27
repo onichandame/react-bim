@@ -1,34 +1,45 @@
-import React, { FC, ComponentProps } from 'react'
+import React, { FC, useRef, useEffect, ComponentProps } from 'react'
 import { a } from '@react-spring/three'
-import { Canvas as R3FC } from 'react-three-fiber'
+import { Canvas as RCanvas } from 'react-three-fiber'
 
 import { Scene } from './Scene'
 import { useControl } from './useControl'
 
 export const Canvas: FC = ({ children, ...other }: ComponentProps<FC>) => {
-  const bound: [number, number] = [-100, 100]
+  const bound: [number, number] = [-200, 200]
   const [{ x, y, z }] = useControl(bound, bound, bound, { domTarget: window })
+  const canvas = useRef<HTMLDivElement | null>(null)
+  useEffect(() => {
+    // prevents opening context menu on right click
+    canvas &&
+      canvas.current &&
+      canvas.current.addEventListener('contextmenu', e => e.preventDefault())
+    // registers the camera
+  }, [])
   return (
-    <R3FC
-      invalidateFrameloop
-      camera={{
-        isPerspectiveCamera: true,
-        position: [0, 0, 4],
-        fov: 55,
-        near: 0.01,
-        far: 1000,
-      }}
-      {...other}
-    >
-      <Scene>
-        <a.group
-          position-x={x.interpolate(x => (x / 500) * 15)}
-          position-y={y.interpolate(x => (x / 500) * 15)}
-          position-z={z.interpolate(x => (x / 500) * 25)}
-        >
-          {children}
-        </a.group>
-      </Scene>
-    </R3FC>
+    <div ref={canvas}>
+      <RCanvas
+        concurrent
+        invalidateFrameloop
+        camera={{
+          isPerspectiveCamera: true,
+          position: [0, 0, 10],
+          fov: 55,
+          near: 0.01,
+          far: 1000,
+        }}
+        {...other}
+      >
+        <Scene>
+          <a.group
+            rotation-x={x.interpolate(x => (x / 500) * 10)}
+            position-y={y.interpolate(x => (x / 500) * 10)}
+            position-z={z.interpolate(x => (x / 500) * 25)}
+          >
+            {children}
+          </a.group>
+        </Scene>
+      </RCanvas>
+    </div>
   )
 }
