@@ -1,5 +1,7 @@
 .cache
+.github
+.storybook
 package.json
 package-lock.json
+dist
 yarn.lock
-public

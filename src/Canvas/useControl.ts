@@ -1,15 +1,15 @@
-import { useCallback, useEffect, RefObject } from 'react';
-import { useSpring, SpringValue, config } from '@react-spring/core';
-import { useGesture } from 'react-use-gesture';
+import { useCallback, useEffect, RefObject } from 'react'
+import { useSpring, SpringValue, config } from '@react-spring/core'
+import { useGesture } from 'react-use-gesture'
 
-import { clamp } from '../utils';
+import { clamp } from '../utils'
 
 type Props = [
   [number, number],
   [number, number],
   [number, number],
   { domTarget?: EventTarget | RefObject<EventTarget> | undefined }
-];
+]
 
 // scroll:
 //  up: zoom in
@@ -28,44 +28,46 @@ export const useControl = (
   const [{ x }, setX] = useSpring<{ x: number }>(() => ({
     x: 0,
     config: config.slow,
-  }));
+  }))
   const [{ y }, setY] = useSpring<{ y: number }>(() => ({
     y: 5,
     config: config.slow,
-  }));
+  }))
   const [{ z }, setZ] = useSpring<{ z: number }>(() => ({
     z: 5,
     config: config.slow,
-  }));
+  }))
   const zoom = useCallback(
     ({ wheeling, xy: [, newY], previous: [, oldY], memo = z.get() }) => {
       if (wheeling) {
-        const newZ = clamp(memo + newY - oldY, ...zBounds);
-        setZ({ z: newZ });
-        return newZ;
+        const newZ = clamp(memo + newY - oldY, ...zBounds)
+        setZ({ z: newZ })
+        return newZ
       } else {
-        return memo;
+        return memo
       }
     },
     [zBounds, z, setZ]
-  );
+  )
   const drag = useCallback(
     ({
-      xy: [newX, newY],
-      previous: [oldX, oldY],
+      buttons,
+      dragging,
+      offset: [newX, newY],
       memo = [x.get(), y.get()],
     }) => {
-      newX = clamp(memo[0] + newX - oldX, ...xBounds);
-      setX({ x: newX });
-      newY = clamp(memo[1] - (newY - oldY), ...yBounds);
-      setY({ y: newY });
-      return [newX, newY];
+      if (dragging && buttons == 2) {
+        setX({ x: newX })
+        setY({ y: -newY })
+        return [newX, newY]
+      }
+      return memo
     },
     [xBounds, yBounds, x, y, setX, setY]
-  );
-  const bind = useGesture({ onWheel: zoom, onDrag: drag }, { domTarget });
+  )
+  const bind = useGesture({ onWheel: zoom, onDrag: drag }, { domTarget })
   useEffect(() => {
-    domTarget && bind();
-  }, [domTarget, bind]);
-  return [{ x, y, z }, bind];
-};
+    domTarget && bind()
+  }, [domTarget, bind])
+  return [{ x, y, z }, bind]
+}

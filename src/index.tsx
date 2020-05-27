@@ -1,2 +1,2 @@
-export * from './Canvas';
-export * from './Model';
+export * from './Canvas'
+export * from './Model'
