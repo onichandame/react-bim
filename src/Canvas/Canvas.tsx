@@ -32,9 +32,9 @@ export const Canvas: FC = ({ children, ...other }: ComponentProps<FC>) => {
       >
         <Scene>
           <a.group
-            rotation-x={x.interpolate(x => (x / 500) * 10)}
-            position-y={y.interpolate(x => (x / 500) * 10)}
-            position-z={z.interpolate(x => (x / 500) * 25)}
+            rotation-x={y.interpolate(y => -(y / 500) * 10)}
+            rotation-y={x.interpolate(x => (x / 500) * 10)}
+            position-z={z.interpolate(z => (z / 500) * 25)}
           >
             {children}
           </a.group>
