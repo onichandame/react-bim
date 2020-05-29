@@ -1,11 +1,14 @@
-import { Suspense, useEffect, useReducer } from 'react'
+import { Suspense, useState, useEffect, useReducer } from 'react'
 import { a } from '@react-spring/three';
+import { Vector3, Euler } from 'three'
 import { Meta, Story, Preview, Props } from '@storybook/addon-docs/blocks';
 
 import { Canvas } from '../'
 
 import { Model } from '.'
-import model from './model.glb'
+import composed from './model.glb'
+import dark from './model.err.glb'
+import light from './model.dis.glb'
 
 <Meta title="Model" component={Model}/>
 
@@ -17,9 +20,25 @@ The root of all models
 
 <Preview>
   <Story name="Basic">
-    <Canvas style={{ height:'500px'}}>
-      <Model src={model} fallback={'loading...'} />
-    </Canvas>
+    {
+      () => {
+        const [status, setStatus] = useState('composed')
+        return (
+          <div style={{ display: 'flex', flexDirection: 'row', alignItems: 'center' }}>
+            <Canvas style={{ flexGrow: 1, height:'100vh'}}>
+              <Model src={{composed, dark, light}} status={status} fallback={'loading...'} />
+            </Canvas>
+            <select value={status} onChange={v => setStatus(v.currentTarget.value)}>
+              {
+                ['composed', 'dark', 'light'].map(s => (
+                  <option value={s}>{s}</option>
+                ))
+              }
+            </select>
+          </div>
+        )
+      }
+    }
   </Story>
 </Preview>
 
@@ -27,11 +46,56 @@ The root of all models
 
 <Preview>
   <Story name="Responsive">
-    <Canvas style={{ height:'500px'}}>
-      <a.group onClick={()=>alert('hi')}>
-      <Model src={model} fallback={'loading...'} />
-      </a.group>
-    </Canvas>
+    {
+      () => {
+        const [status, setStatus] = useState('composed')
+        return (
+          <Canvas style={{ display: 'flex', height:'100vh'}}>
+            <Model
+              onPointerOver={()=>setStatus('dark')}
+              onPointerLeave={()=>setStatus('composed')}
+              onClick={()=>setStatus('light')}
+              src={{composed, dark, light}}
+              status={status}
+              fallback={'loading...'}
+            />
+          </Canvas>
+        )
+      }
+    }
+  </Story>
+</Preview>
+
+## Position & Rotation
+
+<Preview>
+  <Story name="Position & Rotation">
+    {
+      () => {
+        const [status, setStatus] = useState('composed')
+        return (
+          <Canvas style={{ display: 'flex', height:'100vh'}}>
+            <Model
+              position={new Vector3(0,3,0)}
+              src={composed}
+              fallback={'loading...'}
+            />
+            <Model
+              position={new Vector3(0,0,0)}
+              rotation={new Euler(0, 0, 90 * Math.PI / 180)}
+              src={dark}
+              fallback={'loading...'}
+            />
+            <Model
+              position={new Vector3(0,-3,0)}
+              rotation={new Euler(180 * Math.PI / 180, 0, 0)}
+              src={light}
+              fallback={'loading...'}
+            />
+          </Canvas>
+        )
+      }
+    }
   </Story>
 </Preview>
 

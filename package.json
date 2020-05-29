@@ -21,7 +21,6 @@
     "build-storybook": "build-storybook"
   },
   "peerDependencies": {
-    "@react-spring/three": "^9.0.0-beta.33",
     "react": ">=16",
     "react-three-fiber": "^4.1.1"
   },
@@ -42,7 +41,6 @@
   "module": "dist/react-bim.esm.js",
   "devDependencies": {
     "@babel/core": "^7.9.6",
-    "@react-spring/three": "^9.0.0-rc.3",
     "@storybook/addon-actions": "^5.3.19",
     "@storybook/addon-docs": "^5.3.19",
     "@storybook/addon-info": "^5.3.19",
@@ -67,6 +65,7 @@
     "typescript": "^3.9.3"
   },
   "dependencies": {
+    "drei": "^0.0.47",
     "react-use-gesture": "^7.0.15"
   }
 }
