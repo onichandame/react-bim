@@ -9,21 +9,20 @@ A helper library that provides 3D BIM component based on react-three-fiber. May 
 # Usage
 
 ```typescript
-import React, { FC, useState } from 'react'
-import { Canvas, useModel } from 'react-bim'
+import React, { FC, useState, useEffect } from 'react'
+import { Canvas, Model } from 'react-bim'
 
 const App: FC = () => {
-  const Model = useModel('/models/default.gltf')
-  const [ status, setStatus ] = useState<'normal'|'error'|'disconnect'>()
+  const [ status, setStatus ] = useState<'normal'|'error'>()
+  useEffect(() => setInterval(() => setStatus(status === 'normal' ? 'error' : 'normal'), 1000), [])
   return (
     <Canvas>
       <Model
         src={{
           normal: '/normal.glb',
-          error: '/error.glb',
-          disconnect: '/disconnect.glb'
+          error: '/error.glb'
         }}
-        status=
+        status={status}
       />
     </Canvas>
   )
