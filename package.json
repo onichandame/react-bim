@@ -12,13 +12,14 @@
   "scripts": {
     "dev": "yarn storybook",
     "start": "tsdx watch",
-    "build": "tsdx build",
     "test": "tsdx test --passWithNoTests",
     "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,md}\"",
     "lint": "yarn format",
     "prepare": "tsdx build",
     "storybook": "start-storybook -p 3000",
-    "build-storybook": "build-storybook"
+    "build": "tsdx build",
+    "build:docs": "yarn build-storybook",
+    "build-storybook": "build-storybook -o ./docs"
   },
   "peerDependencies": {
     "react": ">=16",
