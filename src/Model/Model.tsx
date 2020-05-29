@@ -7,7 +7,7 @@ type CommonProps = ComponentProps<'group'>
 
 type DullProps = {
   src: string
-  status: undefined
+  status?: undefined
 } & CommonProps
 
 type InterestingProps = {
